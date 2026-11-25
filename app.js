@@ -68,7 +68,6 @@
     clearSearch.hidden = true;
     apply();
     sectionHeading.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    search.focus({ preventScroll: true });
   }
 
   function apply() {
