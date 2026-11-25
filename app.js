@@ -22,6 +22,26 @@
     'وظائف وتطوع': { icon: 'briefcase-business', note: 'فرص العمل والتطوع', tone: 'jobs' },
     'تعليم': { icon: 'graduation-cap', note: 'الصفوف والرزم التعليمية', tone: 'education' }
   };
+  const packCards = sections.flatMap(section => [...section.querySelectorAll('.card.packs')]);
+  let packGroup = null;
+  if (packCards.length) {
+    const totalPacks = packCards.reduce((sum, card) => sum + card.querySelectorAll('.plist li').length, 0);
+    const wrap = document.createElement('div');
+    wrap.className = 'pack-group';
+    const det = document.createElement('details');
+    det.className = 'acc group-acc';
+    const sum = document.createElement('summary');
+    sum.innerHTML = '<span class="sbl"></span><span class="pcnt"></span>';
+    sum.querySelector('.sbl').textContent = 'الرزم التعليمية';
+    sum.querySelector('.pcnt').textContent = `${numbers.format(packCards.length)} صف · ${numbers.format(totalPacks)} رزمة`;
+    const inner = document.createElement('div');
+    inner.className = 'grid pack-grid';
+    packCards[0].before(wrap);
+    inner.append(...packCards);
+    det.append(sum, inner);
+    wrap.append(det);
+    packGroup = { wrap, det };
+  }
   const cards = sections.flatMap(section =>
     [...section.querySelectorAll('.card')].map(card => ({ section, card, keywords: normalize(card.textContent) })));
   let active = null;
@@ -80,6 +100,11 @@
       const accordion = row.card.querySelector('details.acc');
       if (accordion && words.length) accordion.open = visible;
       if (visible) matching++;
+    }
+    if (packGroup) {
+      const anyPack = packCards.some(card => !card.hidden);
+      packGroup.wrap.hidden = !anyPack;
+      packGroup.det.open = words.length > 0 && anyPack;
     }
     sections.forEach(section => {
       section.hidden = active ? section !== active : words.length ? ![...section.querySelectorAll('.card')].some(card => !card.hidden) : true;
