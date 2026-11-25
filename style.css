@@ -113,3 +113,8 @@ p.field-help { margin-block: .25rem 0; }
   .review-tools { align-items: flex-start; }
 }
 .card-title { margin-block: 0 .25rem; font-size: 1.12rem; }
+
+/* Site logos next to each card title. */
+.card-head { display: flex; align-items: center; gap: .6rem; margin-block-end: .3rem; }
+.card-head h3 { margin: 0; }
+.site-logo { width: 2.5rem; height: 2.5rem; flex: none; object-fit: contain; background: #fff; border: 1px solid var(--line); border-radius: .55rem; padding: 3px; }
