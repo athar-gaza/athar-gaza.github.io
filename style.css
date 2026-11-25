@@ -270,3 +270,7 @@ main > section:not(.hero) > h2 { font-family: var(--font-display); font-size: 1.
 @media (prefers-reduced-motion: reduce) {
   .category-tile, .tile-arrow { transition: none !important; }
 }
+.pack-group { grid-column: 1 / -1; }
+.group-acc { overflow: hidden; border: 1px solid #e1e9e2; border-radius: 1.15rem; background: var(--surface); }
+.group-acc > summary { padding: 1rem; font-size: 1rem; }
+.group-acc > .pack-grid { padding: .9rem; }
