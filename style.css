@@ -76,4 +76,22 @@ footer { margin-block: 2rem 1.5rem; padding-block-start: 1rem; border-block-star
   .chead { gap: .85rem; }
   .ctext h3 { font-size: 1.08rem; }
 }
-/* v20261125d */
+
+/* Pack accordion cards (education packs) */
+.packs .acc { border: 1px solid var(--line); border-radius: .55rem; overflow: hidden; background: var(--surface); }
+.acc summary { display: flex; align-items: center; justify-content: space-between; gap: .5rem; cursor: pointer; list-style: none; background: var(--soft); color: var(--accent); font-weight: 700; font-size: .88rem; padding: .55rem .75rem; }
+.acc summary::-webkit-details-marker { display: none; }
+.acc summary::before { content: ""; flex: none; width: .5rem; height: .5rem; border-inline-end: 2px solid var(--accent); border-block-end: 2px solid var(--accent); transform: rotate(45deg); margin-inline-end: .15rem; transition: transform .15s; }
+.acc[open] summary::before { transform: rotate(225deg); }
+.acc summary:hover { background: #dfe9e0; }
+.acc[open] summary { border-block-end: 1px solid var(--line); }
+.acc .sbl { margin-inline-end: auto; }
+.acc .pcnt { background: #fff; border: 1px solid var(--line); color: var(--muted); font-size: .72rem; font-weight: 400; border-radius: 99px; padding: .08rem .55rem; white-space: nowrap; }
+.plist { list-style: none; padding: .2rem .75rem; display: flex; flex-direction: column; }
+.plist li { display: flex; align-items: center; flex-wrap: wrap; gap: .35rem .6rem; padding: .45rem 0; border-block-end: 1px dashed var(--line); }
+.plist li:last-child { border-block-end: 0; }
+.pname { flex: 1 1 9rem; font-size: .88rem; }
+.psize { color: var(--muted); font-size: .76rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.btn.dl { padding: .28rem .6rem; font-size: .78rem; }
+.btn.dl .bl::before { content: "⬇ "; }
+/* v20261125e */
