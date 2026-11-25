@@ -2,16 +2,28 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; base-uri 'none'; form-action 'none'; object-src 'none'">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="أثر — دليل الخدمات والمساعدات والفرص التعليمية والعملية في غزة وفلسطين.">
   <meta name="theme-color" content="#176447">
   <meta name="referrer" content="no-referrer">
   <title>أثر | دليل الخدمات</title>
-  <link rel="stylesheet" href="./style.css?v=20261125h">
-  <script src="./app.js?v=20261125h" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css?v=20261125i">
+  <script src="./app.js?v=20261125i" defer></script>
 </head>
 <body>
+  <svg class="icon-sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="icon-utensils" viewBox="0 0 24 24"><path d="M7 2v8M4 2v5a3 3 0 0 0 6 0V2M7 10v12M17 2v20M17 2c-3 3-3 8 0 10"/></symbol>
+    <symbol id="icon-flame" viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-4-3-6-4-10-2 2-3 4-3 6-2-1-3-3-3-5-3 3-5 6-5 9a8 8 0 0 0 8 7Z"/><path d="M12 22a4 4 0 0 0 4-4c0-2-2-3-3-5-1 2-3 3-3 5a3 3 0 0 0 2 4Z"/></symbol>
+    <symbol id="icon-hand-heart" viewBox="0 0 24 24"><path d="M3 12h4l3 3h4l7-6a2 2 0 0 0-3-3l-5 3H9l-2-2H3zM3 12v8h14l4-5"/><path d="M12 5c-2-3-6-1-5 2 1 2 5 4 5 4s4-2 5-4c1-3-3-5-5-2Z"/></symbol>
+    <symbol id="icon-heart-handshake" viewBox="0 0 24 24"><path d="m3 12 4-4 4 1 2 2 2-2 3-1 3 4-8 8-5-3-5-5Z"/><path d="m7 8 3-4 3 2 3-2 3 4M9 13l3 3 3-3"/></symbol>
+    <symbol id="icon-briefcase-business" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M8 7V4h8v3M2 12h20M10 12v2h4v-2"/></symbol>
+    <symbol id="icon-graduation-cap" viewBox="0 0 24 24"><path d="m2 9 10-5 10 5-10 5L2 9Z"/><path d="M6 11v5c4 3 8 3 12 0v-5M22 9v7"/></symbol>
+  </svg>
+
   <header class="top">
     <div class="wrap top-inner">
       <a class="identity" href="./" aria-label="أثر — الصفحة الرئيسية">
@@ -25,7 +37,7 @@
   <div class="toolbar">
     <div class="wrap toolbar-inner">
       <label class="search"><span class="search-icon" aria-hidden="true">⌕</span><input id="search" type="search" maxlength="120" autocomplete="off" placeholder="ابحث عن خدمة، جهة، فرصة أو مادة تعليمية..." aria-label="ابحث عن خدمة أو جهة أو فرصة"><button class="clear-search" id="clear-search" type="button" aria-label="مسح البحث" hidden>×</button></label>
-      <div class="chips" role="group" aria-label="تصفية حسب التصنيف"><button class="chip on" data-cat="" aria-pressed="true">الكل <span>51</span></button><button class="chip" data-cat="غذاء" aria-pressed="false">غذاء <span>2</span></button><button class="chip" data-cat="غاز" aria-pressed="false">غاز <span>1</span></button><button class="chip" data-cat="مساعدات نقدية وعينية" aria-pressed="false">مساعدات نقدية وعينية <span>10</span></button><button class="chip" data-cat="أيتام" aria-pressed="false">أيتام <span>5</span></button><button class="chip" data-cat="وظائف وتطوع" aria-pressed="false">وظائف وتطوع <span>7</span></button><button class="chip" data-cat="تعليم" aria-pressed="false">تعليم <span>26</span></button></div>
+
     </div>
   </div>
   <main class="wrap">
@@ -47,9 +59,11 @@
         <div><strong>26</strong><span>مصدراً تعليمياً</span></div>
       </div>
     </section>
-    <div class="directory-heading" id="directory"><div><span class="eyebrow">استكشف الدليل</span><h2>ماذا تبحث عنه اليوم؟</h2></div><p>اختر تصنيفاً أو اكتب كلمة للعثور على ما تحتاجه.</p></div>
-    <p id="result-count" class="counter" role="status" aria-live="polite" aria-atomic="true"></p>
-    <p id="empty" class="empty" hidden>لا توجد نتائج مطابقة. جرّب كلمة أخرى أو اختر «الكل».</p>
+    <div class="directory-heading" id="directory-heading"><div><span class="eyebrow">استكشف الدليل</span><h2>ماذا تبحث عنه اليوم؟</h2></div><p>اختر أحد الأقسام للوصول إلى خدماته وموارده.</p></div>
+    <div class="category-grid" id="category-grid" aria-label="أقسام الدليل"></div>
+    <div class="section-heading" id="section-heading" hidden><button class="back-categories" id="back-categories" type="button"><span aria-hidden="true">→</span><span class="back-label">العودة إلى الأقسام</span></button><div><span class="eyebrow">تصفّح القسم</span><h2 id="section-title"></h2></div></div>
+    <p id="result-count" class="counter" role="status" aria-live="polite" aria-atomic="true" hidden></p>
+    <p id="empty" class="empty" hidden>لا توجد نتائج مطابقة. جرّب كلمة أخرى.</p>
     
 <section data-cat="غذاء"><h2>غذاء<span class="cnt">2</span></h2><div class="grid">
 <article class="card"><span class="unv">غير موثّق</span><div class="chead">
@@ -192,4 +206,4 @@
     <span>أثر دليل روابط فقط، ولا يقدّم المساعدة ولا يضمن فتح التسجيل.</span>
   </footer>
 </body>
-  </html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               </html>
