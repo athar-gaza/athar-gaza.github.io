@@ -64,7 +64,7 @@ h2 .cnt { background: var(--soft); color: var(--accent); border-radius: 99px; fo
 .btn { display: inline-flex; align-items: center; gap: .45rem; border: 1px solid var(--accent); color: var(--accent); border-radius: .5rem; padding: .4rem .75rem; font-size: .84rem; font-weight: 700; text-decoration: none; }
 .btn .host { font-weight: 400; font-size: .72rem; color: var(--muted); }
 .btn:hover { background: var(--soft); }
-.unv { position: absolute; top: .7rem; inset-inline-end: .8rem; background: var(--warn-bg); color: var(--warn-ink); font-size: .7rem; padding: .1rem .5rem; border-radius: .35rem; }
+.unv { align-self: flex-end; background: var(--warn-bg); color: var(--warn-ink); font-size: .7rem; padding: .1rem .5rem; border-radius: .35rem; }
 
 /* Footer */
 footer { margin-block: 2rem 1.5rem; padding-block-start: 1rem; border-block-start: 1px solid var(--line); color: var(--muted); font-size: .8rem; display: flex; flex-wrap: wrap; gap: .4rem 1.2rem; }
