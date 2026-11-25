@@ -22,6 +22,8 @@
       const visible = (!active || row.section.dataset.cat === active) &&
         words.every(word => row.keywords.includes(word));
       row.card.hidden = !visible;
+      const acc = row.card.querySelector('details.acc');
+      if (acc) acc.open = visible && words.length > 0;
       if (visible) matching++;
     }
     for (const section of sections) {
