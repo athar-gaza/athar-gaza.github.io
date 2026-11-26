@@ -115,7 +115,7 @@
       });
       if (!newsList.children.length) renderNews([], updatedAt);
     }
-    newsUpdated.textContent = updatedAt ? `آخر تحديث: ${updatedAt}` : 'بانتظار تحديث الأخبار';
+    newsUpdated.textContent = updatedAt ? `آخر تحديث: ${(() => { const d = new Date(updatedAt); return typeof updatedAt === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(updatedAt) && !isNaN(d) ? d.toLocaleString('ar', { timeZone: 'Asia/Hebron', day: 'numeric', month: 'long', hour: 'numeric', minute: '2-digit' }) : updatedAt; })()}` : 'بانتظار تحديث الأخبار';
   }
 
   async function openNews() {
