@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; connect-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; base-uri 'none'; form-action 'none'; object-src 'none'">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="أثر — دليل الخدمات والمساعدات والفرص التعليمية والعملية في غزة وفلسطين.">
   <meta name="theme-color" content="#176447">
@@ -11,8 +11,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./style.css?v=20261125k">
-  <script src="./app.js?v=20261125k" defer></script>
+  <link rel="stylesheet" href="./style.css?v=20261126-news2">
+  <script src="./app.js?v=20261126-news2" defer></script>
 </head>
 <body>
   <svg class="icon-sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
@@ -57,6 +57,33 @@
         <div><strong>51</strong><span>خدمة ومورد</span></div>
         <div><strong>6</strong><span>تصنيفات رئيسية</span></div>
         <div><strong>26</strong><span>مصدراً تعليمياً</span></div>
+      </div>
+    </section>
+    <button class="news-feature" id="open-news" type="button" aria-controls="news-panel" aria-label="افتح أخبار فلسطين اليوم">
+      <span class="news-visual" aria-hidden="true">
+        <span class="news-orbit"></span>
+        <svg class="news-paper" viewBox="0 0 72 72" role="img" focusable="false">
+          <path class="paper-shadow" d="M16 13h39a5 5 0 0 1 5 5v40H21a5 5 0 0 1-5-5V13Z"/>
+          <path class="paper-face" d="M12 9h39a5 5 0 0 1 5 5v40H17a5 5 0 0 1-5-5V9Z"/>
+          <path class="paper-fold" d="M45 9v13h11"/>
+          <path class="paper-red" d="M19 28h29"/><path class="paper-black" d="M19 34h24"/><path class="paper-green" d="M19 40h27"/>
+          <path class="paper-line" d="M19 47h10m5 0h12"/>
+          <path class="paper-accent" d="M19 16h17"/>
+        </svg>
+        <span class="news-glint"></span>
+      </span>
+      <span class="news-copy"><span class="news-kicker"><i></i> نافذة فلسطين اليومية</span><strong>أخبار فلسطين اليوم</strong><small>آخر المستجدات من غزة وفلسطين في مكان واحد</small></span>
+      <span class="news-cta"><span>تابع الأخبار</span><b aria-hidden="true">←</b></span>
+      <span class="news-live" aria-hidden="true"></span>
+    </button>
+    <section class="news-panel" id="news-panel" aria-labelledby="news-title" hidden>
+      <div class="news-panel-head">
+        <button class="back-categories" id="back-news" type="button"><span aria-hidden="true">→</span> العودة إلى الصفحة الرئيسية</button>
+        <div><span class="eyebrow">نافذة فلسطين اليومية</span><h2 id="news-title">أخبار فلسطين اليوم</h2><p>آخر المستجدات من غزة وفلسطين</p></div>
+      </div>
+      <div class="news-meta"><span><i></i> موجز الأخبار</span><span id="news-updated">بانتظار تحديث الأخبار</span></div>
+      <div class="news-list" id="news-list" aria-live="polite">
+        <div class="news-empty"><span class="news-empty-icon">▤</span><strong>مساحة الأخبار جاهزة</strong><p>ستظهر هنا الأخبار التي تُضاف إلى الموقع.</p></div>
       </div>
     </section>
     <div class="directory-heading" id="directory-heading"><div><span class="eyebrow">استكشف الدليل</span><h2>ماذا تبحث عنه اليوم؟</h2></div><p>اختر أحد الأقسام للوصول إلى خدماته وموارده.</p></div>
@@ -206,4 +233,4 @@
     <span>أثر دليل روابط فقط، ولا يقدّم المساعدة ولا يضمن فتح التسجيل.</span>
   </footer>
 </body>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               </html>
+  </html>
