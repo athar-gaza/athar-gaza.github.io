@@ -101,7 +101,8 @@
         const title = document.createElement('h3'); title.textContent = item.title;
         card.append(title);
         if (typeof item.summary === 'string' && item.summary.trim()) { const summary = document.createElement('p'); summary.textContent = item.summary; card.append(summary); }
-        const meta = [item.source, item.publishedAt].filter(value => typeof value === 'string' && value.trim());
+        const when = (() => { const d = new Date(item.publishedAt); return typeof item.publishedAt === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(item.publishedAt) && !isNaN(d) ? d.toLocaleString('ar', { timeZone: 'Asia/Hebron', day: 'numeric', month: 'long', hour: 'numeric', minute: '2-digit' }) : item.publishedAt; })();
+        const meta = [item.source, when].filter(value => typeof value === 'string' && value.trim());
         if (meta.length || (typeof item.url === 'string' && item.url.trim())) {
           const foot = document.createElement('div'); foot.className = 'news-card-foot';
           if (meta.length) { const source = document.createElement('span'); source.textContent = meta.join(' · '); foot.append(source); }
