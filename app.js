@@ -82,7 +82,11 @@
     sectionHeading.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
+  const NEWS_TTL = 72 * 3600 * 1000;
+  let lastNews = null;
+  const fresh = item => { const t = Date.parse(item && (item.addedAt || item.publishedAt)); return isNaN(t) || Date.now() - t <= NEWS_TTL; };
   function renderNews(items, updatedAt) {
+    if (Array.isArray(items)) items = items.filter(fresh);
     newsList.replaceChildren();
     if (!Array.isArray(items) || !items.length) {
       const emptyState = document.createElement('div');
@@ -129,6 +133,7 @@
       const response = await fetch('./news.json', { cache: 'no-store' });
       if (!response.ok) throw new Error('news feed unavailable');
       const data = await response.json();
+      lastNews = { items: data.news, updatedAt: data.updatedAt };
       renderNews(data.news, data.updatedAt);
     } catch (_) {
       renderNews([], null);
@@ -178,6 +183,7 @@
     search.focus();
     if (!active) showHome(); else apply();
   });
+  setInterval(() => { if (newsActive && lastNews) renderNews(lastNews.items, lastNews.updatedAt); }, 60000);
   buildCategoryCards();
   showHome();
 })();
