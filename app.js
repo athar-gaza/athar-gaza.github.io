@@ -94,6 +94,10 @@
       items.forEach(item => {
         if (!item || typeof item.title !== 'string' || !item.title.trim()) return;
         const card = document.createElement('article'); card.className = 'news-card';
+        if (typeof item.image === 'string' && /^https?:\/\//i.test(item.image.trim())) {
+          const img = document.createElement('img'); img.className = 'news-card-img'; img.loading = 'lazy'; img.alt = ''; img.referrerPolicy = 'no-referrer';
+          img.addEventListener('error', () => img.remove()); img.src = item.image.trim(); card.append(img);
+        }
         const title = document.createElement('h3'); title.textContent = item.title;
         card.append(title);
         if (typeof item.summary === 'string' && item.summary.trim()) { const summary = document.createElement('p'); summary.textContent = item.summary; card.append(summary); }
