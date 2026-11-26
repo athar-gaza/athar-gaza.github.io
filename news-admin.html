@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#176447">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; connect-src 'self' https:; style-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <title>إدارة صحيفة أثر</title>
+  <link rel="stylesheet" href="./news-admin.css">
+  <script src="./news-config.js" defer></script>
+  <script src="./news-admin.js" defer></script>
+</head>
+<body>
+  <main class="admin-wrap">
+    <header class="admin-head">
+      <a href="./" class="brand">أثر <span>ATHAR</span></a>
+      <div><small>لوحة التحكم</small><h1>إدارة صحيفة الأخبار</h1><p>إدارة المصادر ومراقبة الاستيراد التلقائي</p></div>
+      <a class="back" href="./">العودة للموقع ←</a>
+    </header>
+    <section class="panel auth-panel">
+      <div><h2>الاتصال الآمن</h2><p>أدخل مفتاح الإدارة الذي أنشأته في Cloudflare. لا تحفظ الصفحة المفتاح على جهازك.</p></div>
+      <div class="auth-row"><input id="admin-token" type="password" autocomplete="off" placeholder="مفتاح الإدارة (ADMIN_TOKEN)" aria-label="مفتاح الإدارة"><button id="connect" type="button">اتصال</button><button id="disconnect" class="secondary" type="button" hidden>إنهاء الاتصال</button></div>
+      <p id="status" class="status" role="status">غير متصل</p>
+    </section>
+    <section class="panel" id="manage-panel" hidden>
+      <div class="panel-title"><div><h2>إضافة مصدر إخباري</h2><p>أضف رابط RSS أو Atom مباشرًا عبر HTTPS.</p></div></div>
+      <form id="source-form" class="source-form">
+        <label>اسم المصدر<input id="source-name" required maxlength="120" placeholder="مثال: اسم الوكالة"></label>
+        <label>رابط RSS / Atom<input id="source-url" type="url" required placeholder="https://example.org/rss.xml" dir="ltr"></label>
+        <label>التصنيف<select id="source-category"><option>غزة</option><option>فلسطين</option><option>القدس</option><option>الضفة</option><option>عربي</option><option>دولي</option></select></label>
+        <button type="submit">إضافة المصدر</button>
+      </form>
+      <div class="actions"><button id="sync-now" type="button" class="secondary">تشغيل فحص الآن</button><button id="refresh" type="button" class="secondary">تحديث القائمة</button></div>
+      <div class="source-heading"><h2>المصادر المسجلة</h2><span id="source-count">0 مصدر</span></div>
+      <div id="sources" class="sources"><p class="muted">اتصل لعرض المصادر.</p></div>
+      <div class="notice">ملاحظة: لا تضف رابط الصفحة الرئيسية للموقع؛ المطلوب رابط RSS/Atom مباشر. تعطل المصدر لا يحذف الأخبار السابقة.</div>
+    </section>
+  </main>
+</body>
+</html>

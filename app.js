@@ -82,43 +82,41 @@
     sectionHeading.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  const NEWS_TTL = 72 * 3600 * 1000;
-  let lastNews = null;
-  const fresh = item => { const t = Date.parse(item && (item.addedAt || item.publishedAt)); return isNaN(t) || Date.now() - t <= NEWS_TTL; };
   function renderNews(items, updatedAt) {
-    if (Array.isArray(items)) items = items.filter(fresh);
     newsList.replaceChildren();
     if (!Array.isArray(items) || !items.length) {
       const emptyState = document.createElement('div');
       emptyState.className = 'news-empty';
-      emptyState.innerHTML = '<span class="news-empty-icon" aria-hidden="true">▤</span><strong>لا توجد أخبار مضافة حالياً</strong><p>ستظهر التحديثات هنا عند توفرها.</p>';
+      emptyState.innerHTML = '<span class="news-empty-icon" aria-hidden="true">▤</span><strong>لا توجد أخبار حديثة حالياً</strong><p>سيتم عرض الأخبار تلقائياً عند استيرادها من المصادر المعتمدة.</p>';
       newsList.append(emptyState);
     } else {
       items.forEach(item => {
-        if (!item || typeof item.title !== 'string' || !item.title.trim()) return;
+        if (!item || typeof item.title !== 'string' || typeof item.url !== 'string' || !/^https:\/\//i.test(item.url)) return;
         const card = document.createElement('article'); card.className = 'news-card';
-        if (typeof item.image === 'string' && /^https?:\/\//i.test(item.image.trim())) {
-          const img = document.createElement('img'); img.className = 'news-card-img'; img.loading = 'lazy'; img.alt = ''; img.referrerPolicy = 'no-referrer';
-          img.addEventListener('error', () => img.remove()); img.src = item.image.trim(); card.append(img);
+        if (typeof item.imageUrl === 'string' && /^https:\/\//i.test(item.imageUrl)) {
+          const image = document.createElement('img'); image.className = 'news-card-image';
+          image.src = item.imageUrl; image.alt = ''; image.loading = 'lazy'; image.referrerPolicy = 'no-referrer';
+          image.onerror = () => image.remove(); card.append(image);
         }
         const title = document.createElement('h3'); title.textContent = item.title;
         card.append(title);
         if (typeof item.summary === 'string' && item.summary.trim()) { const summary = document.createElement('p'); summary.textContent = item.summary; card.append(summary); }
-        const when = (() => { const d = new Date(item.publishedAt); return typeof item.publishedAt === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(item.publishedAt) && !isNaN(d) ? d.toLocaleString('ar', { timeZone: 'Asia/Hebron', day: 'numeric', month: 'long', hour: 'numeric', minute: '2-digit' }) : item.publishedAt; })();
-        const meta = [item.source, when].filter(value => typeof value === 'string' && value.trim());
-        if (meta.length || (typeof item.url === 'string' && item.url.trim())) {
-          const foot = document.createElement('div'); foot.className = 'news-card-foot';
-          if (meta.length) { const source = document.createElement('span'); source.textContent = meta.join(' · '); foot.append(source); }
-          if (typeof item.url === 'string' && /^https?:\/\//i.test(item.url.trim())) {
-            const link = document.createElement('a'); link.href = item.url.trim(); link.target = '_blank'; link.rel = 'noopener noreferrer'; link.textContent = 'المصدر الأصلي ←'; foot.append(link);
-          }
-          if (foot.children.length) card.append(foot);
+        const foot = document.createElement('div'); foot.className = 'news-card-foot';
+        let published = '';
+        if (item.publishedAt) {
+          const date = new Date(item.publishedAt);
+          if (!Number.isNaN(date.getTime())) published = date.toLocaleString('ar', { dateStyle: 'medium', timeStyle: 'short' });
         }
-        newsList.append(card);
+        const source = document.createElement('span'); source.textContent = [item.source, published].filter(Boolean).join(' · ');
+        const link = document.createElement('a'); link.href = item.url; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.textContent = 'المصدر الأصلي ←';
+        foot.append(source, link); card.append(foot); newsList.append(card);
       });
       if (!newsList.children.length) renderNews([], updatedAt);
     }
-    newsUpdated.textContent = updatedAt ? `آخر تحديث: ${(() => { const d = new Date(updatedAt); return typeof updatedAt === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(updatedAt) && !isNaN(d) ? d.toLocaleString('ar', { timeZone: 'Asia/Hebron', day: 'numeric', month: 'long', hour: 'numeric', minute: '2-digit' }) : updatedAt; })()}` : 'بانتظار تحديث الأخبار';
+    if (updatedAt) {
+      const date = new Date(updatedAt);
+      newsUpdated.textContent = Number.isNaN(date.getTime()) ? 'آخر تحديث متاح' : `آخر تحديث: ${date.toLocaleString('ar', { dateStyle: 'medium', timeStyle: 'short' })}`;
+    } else newsUpdated.textContent = 'بانتظار أول عملية استيراد';
   }
 
   async function openNews() {
@@ -129,14 +127,22 @@
     count.hidden = true; empty.hidden = true; search.value = ''; clearSearch.hidden = true;
     search.placeholder = 'ابحث في خدمات أثر...';
     newsPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    newsUpdated.textContent = 'جاري جلب آخر الأخبار...';
+    const apiBase = String(window.ATHAR_NEWS_API_BASE || '').replace(/\/$/, '');
+    if (!apiBase || apiBase.includes('YOUR-ATHAR-NEWS-WORKER')) {
+      renderNews([], null);
+      newsUpdated.textContent = 'بانتظار ربط خدمة Cloudflare';
+      return;
+    }
     try {
-      const response = await fetch('./news.json', { cache: 'no-store' });
-      if (!response.ok) throw new Error('news feed unavailable');
+      const response = await fetch(`${apiBase}/api/news?limit=60`, { cache: 'no-store', headers: { 'Accept': 'application/json' } });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const data = await response.json();
-      lastNews = { items: data.news, updatedAt: data.updatedAt };
+      if (!data || data.ok !== true || !Array.isArray(data.news)) throw new Error('Invalid news response');
       renderNews(data.news, data.updatedAt);
     } catch (_) {
       renderNews([], null);
+      newsUpdated.textContent = 'تعذر الاتصال بخدمة الأخبار؛ سنحاول عند فتح الصحيفة مجددًا';
     }
   }
 
@@ -183,7 +189,6 @@
     search.focus();
     if (!active) showHome(); else apply();
   });
-  setInterval(() => { if (newsActive && lastNews) renderNews(lastNews.items, lastNews.updatedAt); }, 60000);
   buildCategoryCards();
   showHome();
 })();
