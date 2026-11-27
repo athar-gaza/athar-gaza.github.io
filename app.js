@@ -32,6 +32,18 @@
     [...section.querySelectorAll('.card')].map(card => ({ section, card, keywords: normalize(card.textContent) })));
   let active = null;
 
+  function updateHeroStats() {
+    const stats = document.querySelectorAll('.hero-stats strong');
+    if (stats.length < 3) return;
+    const withCards = sections.filter(section => section.querySelector('.card'));
+    const education = sections.filter(section => section.dataset.cat === 'تعليم')
+      .reduce((sum, section) => sum + section.querySelectorAll('.card').length, 0);
+    stats[0].textContent = cards.length;
+    stats[1].textContent = withCards.length;
+    stats[2].textContent = education;
+  }
+  updateHeroStats();
+
   function buildCategoryCards() {
     directory.replaceChildren();
     sections.forEach(section => {
